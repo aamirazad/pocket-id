@@ -4,7 +4,7 @@
 FROM alpine
 
 # TARGETARCH can be "amd64" or "arm64"
-ARG TARGETARCH=""
+ARG TARGETARCH
 
 WORKDIR /app
 
