@@ -26,8 +26,22 @@ increment_version() {
     echo "${parts[0]}.${parts[1]}.${parts[2]}"
 }
 
+# Parse command line arguments
+FORCE_MAJOR=false
+for arg in "$@"; do
+    case $arg in
+    --major)
+        FORCE_MAJOR=true
+        shift
+        ;;
+    *)
+        # Unknown option
+        ;;
+    esac
+done
+
 # Determine the release type
-if [ "$1" == "major" ]; then
+if [ "$FORCE_MAJOR" == true ]; then
     RELEASE_TYPE="major"
 else
     # Get the latest tag
