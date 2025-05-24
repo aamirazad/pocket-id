@@ -6,7 +6,6 @@ on:
       - "v*.*.*"
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     permissions:
@@ -25,7 +24,7 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - uses: actions/setup-go@v5
         with:
-          go-version-file: 'backend/go.mod'
+          go-version-file: "backend/go.mod"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -78,13 +77,13 @@ jobs:
       - name: Binary attestation
         uses: actions/attest-build-provenance@v2
         with:
-          subject-path: 'backend/.bin/pocket-id-**'
+          subject-path: "backend/.bin/pocket-id-**"
 
       - name: Container image attestation
         uses: actions/attest-build-provenance@v2
         with:
-          subject-name: '${{ env.DOCKER_IMAGE_NAME }}'
-          subject-digest: ${{ steps.container-build-push.digest }}
+          subject-name: "${{ env.DOCKER_IMAGE_NAME }}"
+          subject-digest: ${{ steps.container-build-push.outputs.digest }}
           push-to-registry: true
 
       - name: Upload binaries to release
