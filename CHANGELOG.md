@@ -1,3 +1,36 @@
+## [](https://github.com/pocket-id/pocket-id/compare/v0.53.0...v) (2025-05-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* serve the static frontend trough the backend (#520)
+* remove old DB env variables, and jwk migrations logic (#529)
+
+### Features
+
+* improve buttons styling ([c37386f](https://github.com/pocket-id/pocket-id/commit/c37386f8b2f2c64bd9e7c437879a2217846852b5))
+
+
+### Bug Fixes
+
+* add back month and year selection for date picker ([6c35570](https://github.com/pocket-id/pocket-id/commit/6c35570e78813ca6af1bae6a0374d7483bff9824))
+* animation speed set to max of 300ms ([c726c16](https://github.com/pocket-id/pocket-id/commit/c726c1621b8bd88b20cb05263f6d10888f0af8e2))
+* authorize page doesn't load ([c3a03db](https://github.com/pocket-id/pocket-id/commit/c3a03db8b0f87cddc927481cfad2ccc391f98869))
+* custom logo not correctly loaded if UI configuration is disabled ([bf710ae](https://github.com/pocket-id/pocket-id/commit/bf710aec5625c9dcb43c83d920318a036a135bae))
+* ldap tests ([4dc0b2f](https://github.com/pocket-id/pocket-id/commit/4dc0b2f37f9a57ba1c7ea084dc2a713f283d1b14))
+* remove curly bracket from user group URL ([5fa15f6](https://github.com/pocket-id/pocket-id/commit/5fa15f60984a8f2a02f15900860c3a3097032e1b))
+* remove nested button in user group list ([f57c8d3](https://github.com/pocket-id/pocket-id/commit/f57c8d347e127027378aad8831a8e4dfebfef060))
+* show correct app name on sign out page ([131f470](https://github.com/pocket-id/pocket-id/commit/131f470757044fddd0989a76e9dc9e310f19819c))
+* trim whitespaces from string inputs ([059073d](https://github.com/pocket-id/pocket-id/commit/059073d4c24e34c142dddd4c150c384779fb51a9))
+* use pointer cursor for menu items ([f820fc8](https://github.com/pocket-id/pocket-id/commit/f820fc830161499edb0da2df334e4e473d5825ae))
+* use same color as title for description in alert ([e19b33f](https://github.com/pocket-id/pocket-id/commit/e19b33fc2e2b9dd149da1f9351aca2e839ffae04))
+
+
+### Code Refactoring
+
+* remove old DB env variables, and jwk migrations logic ([#529](https://github.com/pocket-id/pocket-id/issues/529)) ([f115425](https://github.com/pocket-id/pocket-id/commit/f1154257c5a9ac5c95d81343a31c02251631b203))
+* serve the static frontend trough the backend ([#520](https://github.com/pocket-id/pocket-id/issues/520)) ([f8a7467](https://github.com/pocket-id/pocket-id/commit/f8a7467ec0e939f90d19211a0a0efc5e17a58127))
+
 ## [](https://github.com/pocket-id/pocket-id/compare/v0.52.0...v) (2025-05-08)
 
 
