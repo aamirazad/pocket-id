@@ -11,6 +11,7 @@
 	import userStore from '$lib/stores/user-store';
 	import type { OidcDeviceCodeInfo } from '$lib/types/oidc.type';
 	import { getAxiosErrorMessage } from '$lib/utils/error-util';
+	import { preventDefault } from '$lib/utils/event-util';
 	import { startAuthentication } from '@simplewebauthn/browser';
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
@@ -105,7 +106,7 @@
 		</div>
 	{:else}
 		<p class="text-muted-foreground mt-2">{m.enter_code_displayed_in_previous_step()}</p>
-		<form id="device-code-form" onsubmit={authorize} class="w-full max-w-[450px]">
+		<form id="device-code-form" onsubmit={preventDefault(authorize)} class="w-full max-w-[450px]">
 			<Input id="user-code" class="mt-7" placeholder={m.code()} bind:value={userCode} type="text" />
 		</form>
 	{/if}
