@@ -359,7 +359,7 @@ func (s *AppConfigService) LoadDbConfig(ctx context.Context) (err error) {
 	if err != nil {
 		return err
 	}
-	
+
 	s.dbConfig.Store(dest)
 
 	return nil
