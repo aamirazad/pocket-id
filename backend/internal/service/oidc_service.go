@@ -744,6 +744,7 @@ func (s *OidcService) DeleteClientLogo(ctx context.Context, clientID string) err
 		return errors.New("image not found")
 	}
 
+	oldImageType := *client.ImageType
 	client.ImageType = nil
 	err = tx.
 		WithContext(ctx).
@@ -753,7 +754,7 @@ func (s *OidcService) DeleteClientLogo(ctx context.Context, clientID string) err
 		return err
 	}
 
-	imagePath := common.EnvConfig.UploadPath + "/oidc-client-images/" + client.ID + "." + *client.ImageType
+	imagePath := common.EnvConfig.UploadPath + "/oidc-client-images/" + client.ID + "." + oldImageType
 	if err := os.Remove(imagePath); err != nil {
 		return err
 	}
