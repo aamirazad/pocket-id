@@ -5,14 +5,14 @@
 	import { Button } from '$lib/components/ui/button';
 	import Label from '$lib/components/ui/label/label.svelte';
 	import { m } from '$lib/paraglide/messages';
-	import type {
-		OidcClient,
-		OidcClientCreate,
-		OidcClientCreateWithLogo
-	} from '$lib/types/oidc.type';
+	import type { OidcClient, OidcClientCreateWithLogo } from '$lib/types/oidc.type';
 	import { preventDefault } from '$lib/utils/event-util';
 	import { createForm } from '$lib/utils/form-util';
+	import { cn } from '$lib/utils/style';
+	import { LucideChevronDown } from '@lucide/svelte';
+	import { slide } from 'svelte/transition';
 	import { z } from 'zod';
+	import FederatedIdentitiesInput from './federated-identities-input.svelte';
 	import OidcCallbackUrlInput from './oidc-callback-url-input.svelte';
 
 	let {
@@ -24,17 +24,21 @@
 	} = $props();
 
 	let isLoading = $state(false);
+	let showAdvancedOptions = $state(false);
 	let logo = $state<File | null | undefined>();
 	let logoDataURL: string | null = $state(
 		existingClient?.hasLogo ? `/api/oidc/clients/${existingClient!.id}/logo` : null
 	);
 
-	const client: OidcClientCreate = {
+	const client = {
 		name: existingClient?.name || '',
 		callbackURLs: existingClient?.callbackURLs || [],
 		logoutCallbackURLs: existingClient?.logoutCallbackURLs || [],
 		isPublic: existingClient?.isPublic || false,
-		pkceEnabled: existingClient?.pkceEnabled || false
+		pkceEnabled: existingClient?.pkceEnabled || false,
+		credentials: {
+			federatedIdentities: existingClient?.credentials?.federatedIdentities || []
+		}
 	};
 
 	const formSchema = z.object({
@@ -42,7 +46,17 @@
 		callbackURLs: z.array(z.string().nonempty()).default([]),
 		logoutCallbackURLs: z.array(z.string().nonempty()),
 		isPublic: z.boolean(),
-		pkceEnabled: z.boolean()
+		pkceEnabled: z.boolean(),
+		credentials: z.object({
+			federatedIdentities: z.array(
+				z.object({
+					issuer: z.string().url(),
+					subject: z.string().optional(),
+					audience: z.string().optional(),
+					jwks: z.string().url().optional().or(z.literal(''))
+				})
+			)
+		})
 	});
 
 	type FormSchema = typeof formSchema;
@@ -139,8 +153,31 @@
 			</div>
 		</div>
 	</div>
-	<div class="w-full"></div>
-	<div class="mt-5 flex justify-end">
-		<Button {isLoading} type="submit">{m.save()}</Button>
+
+	{#if showAdvancedOptions}
+		<div class="mt-5 md:col-span-2" transition:slide={{ duration: 200 }}>
+			<FederatedIdentitiesInput
+				client={existingClient}
+				bind:federatedIdentities={$inputs.credentials.value.federatedIdentities}
+				bind:error={$inputs.credentials.error}
+			/>
+		</div>
+	{/if}
+
+	<div class="relative mt-5 flex justify-center">
+		<Button
+			variant="ghost"
+			class="text-muted-foregroun"
+			onclick={() => (showAdvancedOptions = !showAdvancedOptions)}
+		>
+			{showAdvancedOptions ? m.hide_advanced_options() : m.show_advanced_options()}
+			<LucideChevronDown
+				class={cn(
+					'size-5 transition-transform duration-200',
+					showAdvancedOptions && 'rotate-180 transform'
+				)}
+			/>
+		</Button>
+		<Button {isLoading} type="submit" class="absolute right-0">{m.save()}</Button>
 	</div>
 </form>

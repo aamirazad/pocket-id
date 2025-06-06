@@ -5,6 +5,8 @@ package service
 import (
 	"context"
 	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/rand"
 	"crypto/x509"
 	"encoding/base64"
 	"fmt"
@@ -16,6 +18,7 @@ import (
 	"github.com/fxamacker/cbor/v2"
 	"github.com/go-webauthn/webauthn/protocol"
 	"github.com/lestrrat-go/jwx/v3/jwk"
+	"github.com/lestrrat-go/jwx/v3/jwt"
 	"gorm.io/gorm"
 
 	"github.com/pocket-id/pocket-id/backend/internal/common"
@@ -30,14 +33,43 @@ type TestService struct {
 	jwtService       *JwtService
 	appConfigService *AppConfigService
 	ldapService      *LdapService
+	externalIdPKey   jwk.Key
 }
 
-func NewTestService(db *gorm.DB, appConfigService *AppConfigService, jwtService *JwtService, ldapService *LdapService) *TestService {
-	return &TestService{db: db, appConfigService: appConfigService, jwtService: jwtService, ldapService: ldapService}
+func NewTestService(db *gorm.DB, appConfigService *AppConfigService, jwtService *JwtService, ldapService *LdapService) (*TestService, error) {
+	s := &TestService{
+		db:               db,
+		appConfigService: appConfigService,
+		jwtService:       jwtService,
+		ldapService:      ldapService,
+	}
+	err := s.initExternalIdP()
+	if err != nil {
+		return nil, fmt.Errorf("failed to initialize external IdP: %w", err)
+	}
+	return s, nil
+}
+
+// Initializes the "external IdP"
+// This creates a new "issuing authority" containing a public JWKS
+// It also stores the private key internally that will be used to issue JWTs
+func (s *TestService) initExternalIdP() error {
+	// Generate a new ECDSA key
+	rawKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	if err != nil {
+		return fmt.Errorf("failed to generate private key: %w", err)
+	}
+
+	s.externalIdPKey, err = utils.ImportRawKey(rawKey)
+	if err != nil {
+		return fmt.Errorf("failed to import private key: %w", err)
+	}
+
+	return nil
 }
 
 //nolint:gocognit
-func (s *TestService) SeedDatabase() error {
+func (s *TestService) SeedDatabase(baseURL string) error {
 	err := s.db.Transaction(func(tx *gorm.DB) error {
 		users := []model.User{
 			{
@@ -138,6 +170,26 @@ func (s *TestService) SeedDatabase() error {
 					userGroups[1],
 				},
 			},
+			{
+				Base: model.Base{
+					ID: "c48232ff-ff65-45ed-ae96-7afa8a9b443b",
+				},
+				Name:              "Federated",
+				Secret:            "$2a$10$Ak.FP8riD1ssy2AGGbG.gOpnp/rBpymd74j0nxNMtW0GG1Lb4gzxe", // PYjrE9u4v9GVqXKi52eur0eb2Ci4kc0x
+				CallbackURLs:      model.UrlList{"http://federated/auth/callback"},
+				CreatedByID:       users[1].ID,
+				AllowedUserGroups: []model.UserGroup{},
+				Credentials: model.OidcClientCredentials{
+					FederatedIdentities: []model.OidcClientFederatedIdentity{
+						{
+							Issuer:   "https://external-idp.local",
+							Audience: "api://PocketID",
+							Subject:  "c48232ff-ff65-45ed-ae96-7afa8a9b443b",
+							JWKS:     baseURL + "/api/externalidp/jwks.json",
+						},
+					},
+				},
+			},
 		}
 		for _, client := range oidcClients {
 			if err := tx.Create(&client).Error; err != nil {
@@ -145,16 +197,28 @@ func (s *TestService) SeedDatabase() error {
 			}
 		}
 
-		authCode := model.OidcAuthorizationCode{
-			Code:      "auth-code",
-			Scope:     "openid profile",
-			Nonce:     "nonce",
-			ExpiresAt: datatype.DateTime(time.Now().Add(1 * time.Hour)),
-			UserID:    users[0].ID,
-			ClientID:  oidcClients[0].ID,
+		authCodes := []model.OidcAuthorizationCode{
+			{
+				Code:      "auth-code",
+				Scope:     "openid profile",
+				Nonce:     "nonce",
+				ExpiresAt: datatype.DateTime(time.Now().Add(1 * time.Hour)),
+				UserID:    users[0].ID,
+				ClientID:  oidcClients[0].ID,
+			},
+			{
+				Code:      "federated",
+				Scope:     "openid profile",
+				Nonce:     "nonce",
+				ExpiresAt: datatype.DateTime(time.Now().Add(1 * time.Hour)),
+				UserID:    users[1].ID,
+				ClientID:  oidcClients[2].ID,
+			},
 		}
-		if err := tx.Create(&authCode).Error; err != nil {
-			return err
+		for _, authCode := range authCodes {
+			if err := tx.Create(&authCode).Error; err != nil {
+				return err
+			}
 		}
 
 		refreshToken := model.OidcRefreshToken{
@@ -177,13 +241,22 @@ func (s *TestService) SeedDatabase() error {
 			return err
 		}
 
-		userAuthorizedClient := model.UserAuthorizedOidcClient{
-			Scope:    "openid profile email",
-			UserID:   users[0].ID,
-			ClientID: oidcClients[0].ID,
+		userAuthorizedClients := []model.UserAuthorizedOidcClient{
+			{
+				Scope:    "openid profile email",
+				UserID:   users[0].ID,
+				ClientID: oidcClients[0].ID,
+			},
+			{
+				Scope:    "openid profile email",
+				UserID:   users[1].ID,
+				ClientID: oidcClients[2].ID,
+			},
 		}
-		if err := tx.Create(&userAuthorizedClient).Error; err != nil {
-			return err
+		for _, userAuthorizedClient := range userAuthorizedClients {
+			if err := tx.Create(&userAuthorizedClient).Error; err != nil {
+				return err
+			}
 		}
 
 		// To generate a new key pair, run the following command:
@@ -404,4 +477,42 @@ func (s *TestService) SetLdapTestConfig(ctx context.Context) error {
 	}
 
 	return nil
+}
+
+// GetExternalIdPJWKS returns the JWKS for the "external IdP".
+func (s *TestService) GetExternalIdPJWKS() (jwk.Set, error) {
+	pubKey, err := s.externalIdPKey.PublicKey()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get public key: %w", err)
+	}
+
+	set := jwk.NewSet()
+	err = set.AddKey(pubKey)
+	if err != nil {
+		return nil, fmt.Errorf("failed to add public key to set: %w", err)
+	}
+
+	return set, nil
+}
+
+func (s *TestService) SignExternalIdPToken(iss, sub, aud string) (string, error) {
+	now := time.Now()
+	token, err := jwt.NewBuilder().
+		Subject(sub).
+		Expiration(now.Add(time.Hour)).
+		IssuedAt(now).
+		Issuer(iss).
+		Audience([]string{aud}).
+		Build()
+	if err != nil {
+		return "", fmt.Errorf("failed to build token: %w", err)
+	}
+
+	alg, _ := s.externalIdPKey.Algorithm()
+	signed, err := jwt.Sign(token, jwt.WithKey(alg, s.externalIdPKey))
+	if err != nil {
+		return "", fmt.Errorf("failed to sign token: %w", err)
+	}
+
+	return string(signed), nil
 }
