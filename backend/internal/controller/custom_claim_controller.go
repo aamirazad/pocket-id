@@ -35,9 +35,6 @@ type CustomClaimController struct {
 // @Tags Custom Claims
 // @Produce json
 // @Success 200 {array} string "List of suggested custom claim names"
-// @Failure 401 {object} object "Unauthorized"
-// @Failure 403 {object} object "Forbidden"
-// @Failure 500 {object} object "Internal server error"
 // @Router /api/custom-claims/suggestions [get]
 func (ccc *CustomClaimController) getSuggestionsHandler(c *gin.Context) {
 	claims, err := ccc.customClaimService.GetSuggestions(c.Request.Context())

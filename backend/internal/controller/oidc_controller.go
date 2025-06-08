@@ -227,7 +227,6 @@ func (oc *OidcController) userInfoHandler(c *gin.Context) {
 // @Description End user session and handle OIDC logout
 // @Tags OIDC
 // @Accept application/x-www-form-urlencoded
-// @Produce html
 // @Param id_token_hint query string false "ID token"
 // @Param post_logout_redirect_uri query string false "URL to redirect to after logout"
 // @Param state query string false "State parameter to include in the redirect"
@@ -542,7 +541,7 @@ func (oc *OidcController) getClientLogoHandler(c *gin.Context) {
 // @Tags OIDC
 // @Accept multipart/form-data
 // @Param id path string true "Client ID"
-// @Param file formData file true "Logo image file (PNG, JPG, or SVG, max 2MB)"
+// @Param file formData file true "Logo image file (PNG, JPG, or SVG)"
 // @Success 204 "No Content"
 // @Router /api/oidc/clients/{id}/logo [post]
 func (oc *OidcController) updateClientLogoHandler(c *gin.Context) {

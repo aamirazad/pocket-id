@@ -57,7 +57,6 @@ type AppConfigController struct {
 // @Accept json
 // @Produce json
 // @Success 200 {array} dto.PublicAppConfigVariableDto
-// @Failure 500 {object} object "{"error": "error message"}"
 // @Router /application-configuration [get]
 func (acc *AppConfigController) listAppConfigHandler(c *gin.Context) {
 	configuration := acc.appConfigService.ListAppConfig(false)
@@ -162,7 +161,6 @@ func (acc *AppConfigController) getLogoHandler(c *gin.Context) {
 // @Tags Application Configuration
 // @Produce image/x-icon
 // @Success 200 {file} binary "Favicon image"
-// @Failure 404 {object} object "{"error": "File not found"}"
 // @Router /api/application-configuration/favicon [get]
 func (acc *AppConfigController) getFaviconHandler(c *gin.Context) {
 	acc.getImage(c, "favicon", "ico")
@@ -175,7 +173,6 @@ func (acc *AppConfigController) getFaviconHandler(c *gin.Context) {
 // @Produce image/png
 // @Produce image/jpeg
 // @Success 200 {file} binary "Background image"
-// @Failure 404 {object} object "{"error": "File not found"}"
 // @Router /api/application-configuration/background-image [get]
 func (acc *AppConfigController) getBackgroundImageHandler(c *gin.Context) {
 	imageType := acc.appConfigService.GetDbConfig().BackgroundImageType.Value
