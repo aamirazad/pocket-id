@@ -85,7 +85,6 @@ func (acc *AppConfigController) listAppConfigHandler(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 200 {array} dto.AppConfigVariableDto
-// @Security BearerAuth
 // @Router /application-configuration/all [get]
 func (acc *AppConfigController) listAllAppConfigHandler(c *gin.Context) {
 	configuration := acc.appConfigService.ListAppConfig(true)
@@ -107,7 +106,6 @@ func (acc *AppConfigController) listAllAppConfigHandler(c *gin.Context) {
 // @Produce json
 // @Param body body dto.AppConfigUpdateDto true "Application Configuration"
 // @Success 200 {array} dto.AppConfigVariableDto
-// @Security BearerAuth
 // @Router /api/application-configuration [put]
 func (acc *AppConfigController) updateAppConfigHandler(c *gin.Context) {
 	var input dto.AppConfigUpdateDto
@@ -192,7 +190,6 @@ func (acc *AppConfigController) getBackgroundImageHandler(c *gin.Context) {
 // @Param light query boolean false "Light mode logo (true) or dark mode logo (false)"
 // @Param file formData file true "Logo image file"
 // @Success 204 "No Content"
-// @Security BearerAuth
 // @Router /api/application-configuration/logo [put]
 func (acc *AppConfigController) updateLogoHandler(c *gin.Context) {
 	dbConfig := acc.appConfigService.GetDbConfig()
@@ -218,7 +215,6 @@ func (acc *AppConfigController) updateLogoHandler(c *gin.Context) {
 // @Accept multipart/form-data
 // @Param file formData file true "Favicon file (.ico)"
 // @Success 204 "No Content"
-// @Security BearerAuth
 // @Router /api/application-configuration/favicon [put]
 func (acc *AppConfigController) updateFaviconHandler(c *gin.Context) {
 	file, err := c.FormFile("file")
@@ -242,7 +238,6 @@ func (acc *AppConfigController) updateFaviconHandler(c *gin.Context) {
 // @Accept multipart/form-data
 // @Param file formData file true "Background image file"
 // @Success 204 "No Content"
-// @Security BearerAuth
 // @Router /api/application-configuration/background-image [put]
 func (acc *AppConfigController) updateBackgroundImageHandler(c *gin.Context) {
 	imageType := acc.appConfigService.GetDbConfig().BackgroundImageType.Value
@@ -280,7 +275,6 @@ func (acc *AppConfigController) updateImage(c *gin.Context, imageName string, ol
 // @Description Manually trigger LDAP synchronization
 // @Tags Application Configuration
 // @Success 204 "No Content"
-// @Security BearerAuth
 // @Router /api/application-configuration/sync-ldap [post]
 func (acc *AppConfigController) syncLdapHandler(c *gin.Context) {
 	err := acc.ldapService.SyncAll(c.Request.Context())
@@ -297,7 +291,6 @@ func (acc *AppConfigController) syncLdapHandler(c *gin.Context) {
 // @Description Send a test email to verify email configuration
 // @Tags Application Configuration
 // @Success 204 "No Content"
-// @Security BearerAuth
 // @Router /api/application-configuration/test-email [post]
 func (acc *AppConfigController) testEmailHandler(c *gin.Context) {
 	userID := c.GetString("userID")
