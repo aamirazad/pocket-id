@@ -325,7 +325,7 @@
 	"client_authorization": "Autorizzazione client",
 	"new_client_authorization": "Nuova autorizzazione client",
 	"disable_animations": "Disabilita animazioni",
-	"turn_off_all_animations_throughout_the_admin_ui": "Disattiva tutte le animazioni nell'interfaccia di amministrazione.",
+	"turn_off_ui_animations": "Disattiva tutte le animazioni nell'interfaccia di amministrazione.",
 	"user_disabled": "Account disabilitato",
 	"disabled_users_cannot_log_in_or_use_services": "Gli utenti disabilitati non possono accedere o utilizzare i servizi.",
 	"user_disabled_successfully": "Utente disabilitato con successo.",

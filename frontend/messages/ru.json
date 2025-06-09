@@ -325,7 +325,7 @@
 	"client_authorization": "Авторизация в клиенте",
 	"new_client_authorization": "Новая авторизация в клиенте",
 	"disable_animations": "Отключить анимации",
-	"turn_off_all_animations_throughout_the_admin_ui": "Выключить все анимации в интерфейсе администратора.",
+	"turn_off_ui_animations": "Выключить все анимации в интерфейсе администратора.",
 	"user_disabled": "Аккаунт отключен",
 	"disabled_users_cannot_log_in_or_use_services": "Отключенные пользователи не могут войти или использовать сервисы.",
 	"user_disabled_successfully": "Пользователь успешно отключен.",

@@ -325,7 +325,7 @@
 	"client_authorization": "客户端授权",
 	"new_client_authorization": "首次客户端授权",
 	"disable_animations": "关闭动画",
-	"turn_off_all_animations_throughout_the_admin_ui": "关闭管理界面中的所有动画效果。",
+	"turn_off_ui_animations": "关闭管理界面中的所有动画效果。",
 	"user_disabled": "账户已禁用",
 	"disabled_users_cannot_log_in_or_use_services": "禁用的用户无法登录或使用服务。",
 	"user_disabled_successfully": "用户已成功禁用。",

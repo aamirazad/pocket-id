@@ -325,7 +325,7 @@
 	"client_authorization": "Autoryzacja klienta",
 	"new_client_authorization": "Nowa autoryzacja klienta",
 	"disable_animations": "Wyłącz animacje",
-	"turn_off_all_animations_throughout_the_admin_ui": "Wyłącz wszystkie animacje w całym interfejsie administracyjnym.",
+	"turn_off_ui_animations": "Wyłącz wszystkie animacje w całym interfejsie administracyjnym.",
 	"user_disabled": "Konto wyłączone",
 	"disabled_users_cannot_log_in_or_use_services": "Wyłączone konta użytkowników nie mogą się logować ani korzystać z usług.",
 	"user_disabled_successfully": "Sukces! Konto zostało wyłączone.",

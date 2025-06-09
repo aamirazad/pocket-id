@@ -325,7 +325,7 @@
 	"client_authorization": "Autorizace klienta",
 	"new_client_authorization": "Nová autorizace klienta",
 	"disable_animations": "Zakázat animace",
-	"turn_off_all_animations_throughout_the_admin_ui": "Vypnout všechny animace v celém administrátorském rozhraní.",
+	"turn_off_ui_animations": "Vypnout všechny animace v celém administrátorském rozhraní.",
 	"user_disabled": "Účet deaktivován",
 	"disabled_users_cannot_log_in_or_use_services": "Zakázaní uživatelé se nemohou přihlásit nebo používat služby.",
 	"user_disabled_successfully": "Uživatel byl úspěšně deaktivován.",

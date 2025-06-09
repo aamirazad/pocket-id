@@ -325,7 +325,7 @@
 	"client_authorization": "Client-Autorisierung",
 	"new_client_authorization": "Neue Client-Autorisierung",
 	"disable_animations": "Animationen deaktivieren",
-	"turn_off_all_animations_throughout_the_admin_ui": "Deaktiviert alle Animationen in der Benutzeroberfläche.",
+	"turn_off_ui_animations": "Deaktiviert alle Animationen in der Benutzeroberfläche.",
 	"user_disabled": "Account deaktiviert",
 	"disabled_users_cannot_log_in_or_use_services": "Deaktivierte Benutzer können sich nicht anmelden oder Dienste nutzen.",
 	"user_disabled_successfully": "Der Benutzer wurde erfolgreich deaktiviert.",

@@ -325,7 +325,7 @@
 	"client_authorization": "客戶端授權",
 	"new_client_authorization": "新客戶端授權",
 	"disable_animations": "停用動畫",
-	"turn_off_all_animations_throughout_the_admin_ui": "關閉整個系統中的所有動畫效果。",
+	"turn_off_ui_animations": "關閉整個系統中的所有動畫效果。",
 	"user_disabled": "帳戶已停用",
 	"disabled_users_cannot_log_in_or_use_services": "已停用的使用者不能登入或使用服務。",
 	"user_disabled_successfully": "使用者已成功停用。",
