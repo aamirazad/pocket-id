@@ -61,15 +61,18 @@
 
 <Popover.Root bind:open {...restProps}>
 	<Popover.Trigger>
-		<Button
-			variant="outline"
-			role="combobox"
-			aria-expanded={open}
-			class={cn('justify-between', restProps.class)}
-		>
-			{items.find((item) => item.value === value)?.label || selectText}
-			<LucideChevronDown class="ml-2 size-4 shrink-0 opacity-50" />
-		</Button>
+		{#snippet child({ props })}
+			<Button
+				variant="outline"
+				role="combobox"
+				aria-expanded={open}
+				{...props}
+				class={cn('justify-between', restProps.class)}
+			>
+				{items.find((item) => item.value === value)?.label || selectText}
+				<LucideChevronDown class="ml-2 size-4 shrink-0 opacity-50" />
+			</Button>
+		{/snippet}
 	</Popover.Trigger>
 	<Popover.Content class="p-0" sameWidth>
 		<Command.Root shouldFilter={false}>
