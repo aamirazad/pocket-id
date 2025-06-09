@@ -1,3 +1,10 @@
+## [](https://github.com/pocket-id/pocket-id/compare/v1.3.0...v) (2025-06-09)
+
+
+### Bug Fixes
+
+* change timestamp of `client_credentials.sql` migration ([2935236](https://github.com/pocket-id/pocket-id/commit/2935236acee9c78c2fe6787ec8b5f53ae0eca047))
+
 ## [](https://github.com/pocket-id/pocket-id/compare/v1.2.0...v) (2025-06-09)
 
 
