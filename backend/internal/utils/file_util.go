@@ -3,13 +3,12 @@ package utils
 import (
 	"errors"
 	"fmt"
+	"github.com/google/uuid"
+	"github.com/pocket-id/pocket-id/backend/resources"
 	"io"
 	"mime/multipart"
 	"os"
 	"path/filepath"
-
-	"github.com/google/uuid"
-	"github.com/pocket-id/pocket-id/backend/resources"
 )
 
 func GetFileExtension(filename string) string {
