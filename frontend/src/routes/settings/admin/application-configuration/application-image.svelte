@@ -1,8 +1,8 @@
 <script lang="ts">
 	import FileInput from '$lib/components/form/file-input.svelte';
 	import { Label } from '$lib/components/ui/label';
-	import { m } from '$lib/paraglide/messages';
 	import { cn } from '$lib/utils/style';
+	import { LucideUpload } from '@lucide/svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 
 	let {
@@ -44,11 +44,12 @@
 	<Label class="w-52" for={id}>{label}</Label>
 	<FileInput {id} variant="secondary" {accept} onchange={onImageChange}>
 		<div
-			class="{forceColorScheme === 'light'
-				? 'bg-[#F1F1F5]'
-				: forceColorScheme === 'dark'
-					? 'bg-[#27272A]'
-					: 'bg-muted'} group relative flex items-center rounded"
+			class={{
+				'group relative flex items-center rounded': true,
+				'bg-[#F1F1F5]': forceColorScheme === 'light',
+				'bg-[#27272A]': forceColorScheme === 'dark',
+				'bg-muted': !forceColorScheme
+			}}
 		>
 			<img
 				class={cn(
@@ -58,11 +59,13 @@
 				src={imageDataURL}
 				alt={label}
 			/>
-			<span
-				class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform font-medium opacity-0 transition-opacity group-hover:opacity-100"
-			>
-				{m.update()}
-			</span>
+			<LucideUpload
+				class={{
+					'absolute top-1/2 left-1/2 size-5 -translate-x-1/2 -translate-y-1/2 transform font-medium opacity-0 transition-opacity group-hover:opacity-100': true,
+					'text-black': forceColorScheme === 'light',
+					'text-white': forceColorScheme === 'dark'
+				}}
+			/>
 		</div>
 	</FileInput>
 </div>
