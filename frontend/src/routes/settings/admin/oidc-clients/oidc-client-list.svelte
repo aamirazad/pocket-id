@@ -1,6 +1,7 @@
 <script lang="ts">
 	import AdvancedTable from '$lib/components/advanced-table.svelte';
 	import { openConfirmDialog } from '$lib/components/confirm-dialog/';
+	import ImageBox from '$lib/components/image-box.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import * as Table from '$lib/components/ui/table';
 	import { m } from '$lib/paraglide/messages';
@@ -56,15 +57,11 @@
 	{#snippet rows({ item })}
 		<Table.Cell class="w-8 font-medium">
 			{#if item.hasLogo}
-				<div class="bg-secondary rounded-2xl p-3">
-					<div class="size-8">
-						<img
-							class="m-auto max-h-full max-w-full object-contain"
-							src="/api/oidc/clients/{item.id}/logo"
-							alt={m.name_logo({ name: item.name })}
-						/>
-					</div>
-				</div>
+				<ImageBox
+					class="min-h-8 min-w-8"
+					src={`/api/oidc/clients/${item.id}/logo`}
+					alt={m.name_logo({ name: item.name })}
+				/>
 			{/if}
 		</Table.Cell>
 		<Table.Cell class="font-medium">{item.name}</Table.Cell>

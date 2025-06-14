@@ -1,7 +1,8 @@
 <script lang="ts">
-	import SwitchWithLabel from '$lib/components/form/switch-with-label.svelte';
 	import FileInput from '$lib/components/form/file-input.svelte';
 	import FormInput from '$lib/components/form/form-input.svelte';
+	import SwitchWithLabel from '$lib/components/form/switch-with-label.svelte';
+	import ImageBox from '$lib/components/image-box.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import Label from '$lib/components/ui/label/label.svelte';
 	import { m } from '$lib/paraglide/messages';
@@ -137,13 +138,11 @@
 		<Label for="logo">{m.logo()}</Label>
 		<div class="mt-2 flex items-end gap-3">
 			{#if logoDataURL}
-				<div class="bg-muted size-32 rounded-2xl p-3">
-					<img
-						class="m-auto max-h-full max-w-full object-contain"
-						src={logoDataURL}
-						alt={m.name_logo({ name: $inputs.name.value })}
-					/>
-				</div>
+				<ImageBox
+					class="size-24"
+					src={logoDataURL}
+					alt={m.name_logo({ name: $inputs.name.value })}
+				/>
 			{/if}
 			<div class="flex flex-col gap-2">
 				<FileInput
