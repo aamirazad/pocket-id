@@ -1,11 +1,12 @@
 package utils
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 // BearerAuth returns the value of the bearer token in the Authorization header if present
