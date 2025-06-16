@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: build-next-image
+  cancel-in-progress: true
+
 jobs:
   build-next:
     runs-on: ubuntu-latest
