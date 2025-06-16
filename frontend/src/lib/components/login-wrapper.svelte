@@ -65,7 +65,8 @@
 	</div>
 {:else}
 	<div
-		class="flex h-screen items-center justify-center bg-[url('{cachedBackgroundImage.getUrl()}')] bg-cover bg-center text-center"
+		class="flex h-screen items-center justify-center bg-cover bg-center text-center"
+		style="background-image: url({cachedBackgroundImage.getUrl()});"
 	>
 		<Card.Root class="mx-3 w-full max-w-md" style={animate ? 'animation-delay: 200ms;' : ''}>
 			<Card.CardContent
