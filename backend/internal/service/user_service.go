@@ -296,15 +296,21 @@ func (s *UserService) updateUserInternal(ctx context.Context, userID string, upd
 	isLdapUser := user.LdapID != nil && s.appConfigService.GetDbConfig().LdapEnabled.IsTrue()
 	allowOwnAccountEdit := s.appConfigService.GetDbConfig().AllowOwnAccountEdit.IsTrue()
 
-	// For LDAP users or if own account editing is not allowed, only allow updating the locale unless it's an LDAP sync
 	if !isLdapSync && (isLdapUser || (!allowOwnAccountEdit && updateOwnUser)) {
+		// Restricted update: Only locale can be changed when:
+		// - User is from LDAP, OR
+		// - User is editing their own account but global setting disallows self-editing
+		// (Exception: LDAP sync operations can update everything)
 		user.Locale = updatedUser.Locale
 	} else {
+		// Full update: Allow updating all personal fields
 		user.FirstName = updatedUser.FirstName
 		user.LastName = updatedUser.LastName
 		user.Email = updatedUser.Email
 		user.Username = updatedUser.Username
 		user.Locale = updatedUser.Locale
+
+		// Admin-only fields: Only allow updates when not updating own account
 		if !updateOwnUser {
 			user.IsAdmin = updatedUser.IsAdmin
 			user.Disabled = updatedUser.Disabled
