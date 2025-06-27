@@ -161,6 +161,7 @@
 				<AccentColorPicker
 					previousColor={appConfig.accentColor}
 					bind:selectedColor={$inputs.accentColor.value}
+					disabled={$appConfigStore.uiConfigDisabled}
 				/>
 			</div>
 		</div>
