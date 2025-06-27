@@ -160,6 +160,9 @@ test.describe('User Signup', () => {
 
 		await page.getByRole('button', { name: 'Skip for now' }).click();
 
+		await expect(page.getByText('Skip Passkey Setup')).toBeVisible();
+		await page.getByRole('button', { name: 'Skip for now' }).nth(1).click();
+
 		await page.waitForURL('/settings/account');
 		await expect(page.getByText('Passkey missing')).toBeVisible();
 	});
