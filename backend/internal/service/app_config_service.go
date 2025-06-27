@@ -234,7 +234,7 @@ func (s *AppConfigService) UpdateAppConfig(ctx context.Context, input dto.AppCon
 	s.dbConfig.Store(cfg)
 
 	// Return the updated config
-	res := cfg.ToAppConfigVariableSlice(true)
+	res := cfg.ToAppConfigVariableSlice(true, false)
 	return res, nil
 }
 
@@ -319,7 +319,7 @@ func (s *AppConfigService) UpdateAppConfigValues(ctx context.Context, keysAndVal
 }
 
 func (s *AppConfigService) ListAppConfig(showAll bool) []model.AppConfigVariable {
-	return s.GetDbConfig().ToAppConfigVariableSlice(showAll)
+	return s.GetDbConfig().ToAppConfigVariableSlice(showAll, true)
 }
 
 func (s *AppConfigService) UpdateImage(ctx context.Context, uploadedFile *multipart.FileHeader, imageName string, oldImageType string) (err error) {

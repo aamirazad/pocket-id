@@ -8,6 +8,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/pocket-id/pocket-id/backend/internal/common"
 )
 
 type AppConfigVariable struct {
@@ -49,7 +51,7 @@ type AppConfig struct {
 	SmtpPort                                   AppConfigVariable `key:"smtpPort"`
 	SmtpFrom                                   AppConfigVariable `key:"smtpFrom"`
 	SmtpUser                                   AppConfigVariable `key:"smtpUser"`
-	SmtpPassword                               AppConfigVariable `key:"smtpPassword"`
+	SmtpPassword                               AppConfigVariable `key:"smtpPassword,sensitive"`
 	SmtpTls                                    AppConfigVariable `key:"smtpTls"`
 	SmtpSkipCertVerify                         AppConfigVariable `key:"smtpSkipCertVerify"`
 	EmailLoginNotificationEnabled              AppConfigVariable `key:"emailLoginNotificationEnabled"`
@@ -60,7 +62,7 @@ type AppConfig struct {
 	LdapEnabled                        AppConfigVariable `key:"ldapEnabled,public"` // Public
 	LdapUrl                            AppConfigVariable `key:"ldapUrl"`
 	LdapBindDn                         AppConfigVariable `key:"ldapBindDn"`
-	LdapBindPassword                   AppConfigVariable `key:"ldapBindPassword"`
+	LdapBindPassword                   AppConfigVariable `key:"ldapBindPassword,sensitive"`
 	LdapBase                           AppConfigVariable `key:"ldapBase"`
 	LdapUserSearchFilter               AppConfigVariable `key:"ldapUserSearchFilter"`
 	LdapUserGroupSearchFilter          AppConfigVariable `key:"ldapUserGroupSearchFilter"`
@@ -78,7 +80,7 @@ type AppConfig struct {
 	LdapSoftDeleteUsers                AppConfigVariable `key:"ldapSoftDeleteUsers"`
 }
 
-func (c *AppConfig) ToAppConfigVariableSlice(showAll bool) []AppConfigVariable {
+func (c *AppConfig) ToAppConfigVariableSlice(showAll bool, redactSensitiveValues bool) []AppConfigVariable {
 	// Use reflection to iterate through all fields
 	cfgValue := reflect.ValueOf(c).Elem()
 	cfgType := cfgValue.Type()
@@ -98,11 +100,16 @@ func (c *AppConfig) ToAppConfigVariableSlice(showAll bool) []AppConfigVariable {
 			continue
 		}
 
-		fieldValue := cfgValue.Field(i)
+		value := cfgValue.Field(i).FieldByName("Value").String()
+
+		// Redact sensitive values if the value isn't empty, the UI config is disabled, and redactSensitiveValues is true
+		if value != "" && common.EnvConfig.UiConfigDisabled && redactSensitiveValues && attrs == "sensitive" {
+			value = "XXXXXXXXXX"
+		}
 
 		appConfigVariable := AppConfigVariable{
 			Key:   key,
-			Value: fieldValue.FieldByName("Value").String(),
+			Value: value,
 		}
 
 		res = append(res, appConfigVariable)
