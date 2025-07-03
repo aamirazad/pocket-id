@@ -34,6 +34,10 @@
 	const userService = new UserService();
 	const webauthnService = new WebAuthnService();
 
+	const userInfoInputDisabled = $derived(
+		!$appConfigStore.allowOwnAccountEdit || (!!account.ldapId && $appConfigStore.ldapEnabled)
+	);
+
 	async function updateAccount(user: UserCreate) {
 		let success = true;
 		await userService
@@ -118,27 +122,23 @@
 </div>
 
 <!-- Account details card -->
-<fieldset
-	disabled={!$appConfigStore.allowOwnAccountEdit ||
-		(!!account.ldapId && $appConfigStore.ldapEnabled)}
->
-	<Card.Root>
-		<Card.Header>
-			<Card.Title>
-				<UserCog class="text-primary/80 size-5" />
-				{m.account_details()}
-			</Card.Title>
-		</Card.Header>
-		<Card.Content>
-			<AccountForm
-				{account}
-				userId={account.id}
-				callback={updateAccount}
-				isLdapUser={!!account.ldapId}
-			/>
-		</Card.Content>
-	</Card.Root>
-</fieldset>
+<Card.Root>
+	<Card.Header>
+		<Card.Title>
+			<UserCog class="text-primary/80 size-5" />
+			{m.account_details()}
+		</Card.Title>
+	</Card.Header>
+	<Card.Content>
+		<AccountForm
+			{account}
+			userId={account.id}
+			callback={updateAccount}
+			isLdapUser={!!account.ldapId}
+			{userInfoInputDisabled}
+		/>
+	</Card.Content>
+</Card.Root>
 
 <!-- Passkey management card -->
 <div>
