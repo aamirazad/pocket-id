@@ -57,7 +57,7 @@ type AuthorizeOidcClientRequestDto struct {
 type AuthorizeOidcClientResponseDto struct {
 	Code        string `json:"code"`
 	CallbackURL string `json:"callbackURL"`
-	Issuer         string `json:"issuer"`
+	Issuer      string `json:"issuer"`
 }
 
 type AuthorizationRequiredDto struct {
