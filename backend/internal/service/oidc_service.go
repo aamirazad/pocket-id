@@ -740,7 +740,7 @@ func updateOIDCClientModelFromDto(client *model.OidcClient, input *dto.OidcClien
 			JWKS:     fi.JWKS,
 		}
 	}
-	
+
 }
 
 func (s *OidcService) DeleteClient(ctx context.Context, clientID string) error {
