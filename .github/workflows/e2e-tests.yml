@@ -3,15 +3,15 @@ on:
   push:
     branches: [main]
     paths-ignore:
-      - 'docs/**'
-      - '**.md'
-      - '.github/**'
+      - "docs/**"
+      - "**.md"
+      - ".github/**"
   pull_request:
     branches: [main]
     paths-ignore:
-      - 'docs/**'
-      - '**.md'
-      - '.github/**'
+      - "docs/**"
+      - "**.md"
+      - ".github/**"
 
 jobs:
   build:
@@ -61,7 +61,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
+          cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Cache Playwright Browsers
@@ -151,7 +151,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
+          cache: "pnpm"
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Cache Playwright Browsers
@@ -212,7 +212,7 @@ jobs:
       - name: Install Playwright Browsers
         working-directory: ./tests
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: pnpm dlx playwright install --with-deps chromium
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Run Docker Container with Postgres DB and LDAP
         working-directory: ./tests/setup
