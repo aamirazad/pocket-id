@@ -1,3 +1,4 @@
+PRAGMA foreign_keys=OFF;
 ---------------------------
 -- Delete all orphaned rows
 ---------------------------
@@ -171,3 +172,6 @@ SELECT id, created_at, name, credential_id, public_key, attestation_type,
 FROM webauthn_credentials;
 DROP TABLE webauthn_credentials;
 ALTER TABLE webauthn_credentials_new RENAME TO webauthn_credentials;
+
+PRAGMA foreign_keys=ON;
+PRAGMA foreign_key_check;
