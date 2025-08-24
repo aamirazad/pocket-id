@@ -1,3 +1,11 @@
+## [](https://github.com/pocket-id/pocket-id/compare/v1.8.0...v) (2025-08-24)
+
+
+### Bug Fixes
+
+* migration clears allowed users groups ([5971bfb](https://github.com/pocket-id/pocket-id/commit/5971bfbfa66ecfebf2b1c08d34fcbd8c18cdc046))
+* wrong column type for reauthentication tokens in Postgres ([#869](https://github.com/pocket-id/pocket-id/issues/869)) ([1283314](https://github.com/pocket-id/pocket-id/commit/1283314f776a0ba43be7d796e7e2243e31f860de))
+
 ## [](https://github.com/pocket-id/pocket-id/compare/v1.7.0...v) (2025-08-23)
 
 
