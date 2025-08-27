@@ -17,6 +17,7 @@
 	"image_should_be_in_format": "L'immagine deve essere in formato PNG o JPEG.",
 	"items_per_page": "Elementi per pagina",
 	"no_items_found": "Nessun elemento trovato",
+	"select_items": "Scegli gli articoli...",
 	"search": "Cerca...",
 	"expand_card": "Espandi scheda",
 	"copied": "Copiato",
@@ -214,7 +215,7 @@
 	"group_members_attribute": "Attributo membri del gruppo",
 	"the_attribute_to_use_for_querying_members_of_a_group": "L'attributo da utilizzare per interrogare i membri di un gruppo.",
 	"group_unique_identifier_attribute": "Attributo identificativo univoco gruppo",
-	"group_name_attribute": "Attributo nome gruppo",
+	"group_rdn_attribute": "Attributo RDN di gruppo (in DN)",
 	"admin_group_name": "Nome gruppo amministratori",
 	"members_of_this_group_will_have_admin_privileges_in_pocketid": "I membri di questo gruppo avranno privilegi di amministratore in Pocket ID.",
 	"disable": "Disabilita",
@@ -440,5 +441,7 @@
 	"last_signed_in_ago": "Ultimo accesso {time} fa",
 	"invalid_client_id": "L'ID cliente può contenere solo lettere, numeri, trattini bassi e trattini.",
 	"custom_client_id_description": "Imposta un ID cliente personalizzato se la tua app lo richiede. Altrimenti, lascia vuoto per generarne uno casuale.",
-	"generated": "Generato"
+	"generated": "Generato",
+	"administration": "Amministrazione",
+	"group_rdn_attribute_description": "L'attributo usato nel nome distinto (DN) dei gruppi. Valore consigliato: `cn`"
 }
