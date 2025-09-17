@@ -1,8 +1,8 @@
 import { m } from '$lib/paraglide/messages';
-import z from 'zod/v4';
+import { z } from 'zod/v4';
 
 export const emptyToUndefined = <T>(validation: z.ZodType<T>) =>
-	z.preprocess((v) => (v === '' ? undefined : v), validation);
+	z.preprocess((v) => (v === '' ? undefined : v), validation.optional());
 
 export const optionalUrl = z
 	.url()
