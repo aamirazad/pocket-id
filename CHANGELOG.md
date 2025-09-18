@@ -1,3 +1,9 @@
+## [1.11.1](https://github.com/pocket-id/pocket-id/compare/v1.10.0...v1.11.1) (2025-09-18)
+
+### Bug Fixes
+
+- add missing translations ([8c9cac2](https://github.com/pocket-id/pocket-id/commit/8c9cac2655ddbe4872234a1b55fdd51d2f3ac31c))
+
 ## [1.11.0](https://github.com/pocket-id/pocket-id/compare/v1.10.0...v1.11.0) (2025-09-18)
 
 
