@@ -1,3 +1,19 @@
+## v1.11.2
+
+### Bug Fixes
+
+* embedded paths not found on windows([c55143d](https://github.com/pocket-id/pocket-id/commit/c55143d8c995fcd604edcdd448c50669e8682e33) by @stonith404)
+* do not treat certain failures in app images bootstrap as fatal ([#966](https://github.com/pocket-id/pocket-id/pull/966) by @ItalyPaleAle)
+* decouple images from app config service ([#965](https://github.com/pocket-id/pocket-id/pull/965) by @stonith404)
+
+### Other
+
+* use git cliff for release notes([fde4e9b](https://github.com/pocket-id/pocket-id/commit/fde4e9b38a34331137a64ce328dad6faf9885808) by @stonith404)
+
+
+
+**Full Changelog**: https://github.com/pocket-id/pocket-id/compare/v1.11.1...v1.11.2
+
 ## v1.11.1
 
 ### Bug Fixes
