@@ -21,10 +21,6 @@ export const BaseTemplate = ({
   appName,
   children,
 }: BaseTemplateProps) => {
-  const finalLogoURL =
-    logoURL ||
-    "https://private-user-images.githubusercontent.com/58886915/359183039-4ceb2708-9f29-4694-b797-be833efce17d.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTY0NTk5MzksIm5iZiI6MTc1NjQ1OTYzOSwicGF0aCI6Ii81ODg4NjkxNS8zNTkxODMwMzktNGNlYjI3MDgtOWYyOS00Njk0LWI3OTctYmU4MzNlZmNlMTdkLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA4MjklMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwODI5VDA5MjcxOVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWM4ZWI5NzlkMDA5NDNmZGU5MjQwMGE1YjA0NWZiNzEzM2E0MzAzOTFmOWRmNDUzNmJmNjQwZTMxNGIzZmMyYmQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.YdfLv1tD5KYnRZPSA3QlR1SsvScpP0rt-J3YD6ZHsCk";
-
   return (
     <Html>
       <Head />
@@ -39,7 +35,7 @@ export const BaseTemplate = ({
             >
               <Column style={{ width: "50px" }}>
                 <Img
-                  src={finalLogoURL}
+                  src={logoURL}
                   width="32"
                   height="32"
                   alt={appName}
