@@ -32,25 +32,24 @@ export const BaseTemplate = ({
         <Container style={{ width: "500px", margin: "0 auto" }}>
           <Section>
             <Row
-            align="left"
-            style={{
-              width: "210px",
-              marginBottom: "16px",
-            }}
-          >
-            <Column>
-              <Img
-                src={finalLogoURL}
-                width="32"
-                height="32"
-                alt={appName}
-                style={logoStyle}
-              />
-            </Column>
-            <Column>
-              <Text style={titleStyle}>{appName}</Text>
-            </Column>
-          </Row>
+              align="left"
+              style={{
+                marginBottom: "16px",
+              }}
+            >
+              <Column style={{ width: "50px" }}>
+                <Img
+                  src={finalLogoURL}
+                  width="32"
+                  height="32"
+                  alt={appName}
+                  style={logoStyle}
+                />
+              </Column>
+              <Column>
+                <Text style={titleStyle}>{appName}</Text>
+              </Column>
+            </Row>
           </Section>
           <div style={content}>{children}</div>
         </Container>
@@ -69,7 +68,6 @@ const logoStyle = {
   width: "32px",
   height: "32px",
   verticalAlign: "middle",
-  marginRight: "8px",
 };
 
 const titleStyle = {
