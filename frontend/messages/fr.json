@@ -318,9 +318,9 @@
 	"reset_to_default": "Valeurs par défaut",
 	"profile_picture_has_been_reset": "La photo de profil a été réinitialisée. La mise à jour peut prendre quelques minutes.",
 	"select_the_language_you_want_to_use": "Choisis la langue que tu veux utiliser. Attention, certains textes peuvent être traduits automatiquement et ne pas être tout à fait exacts.",
-	"contribute_to_translation": "Si tu trouves un problème, n'hésite pas à contribuer à la traduction sur <link href='https://crowdin.com/project/pocket-id'>Crowdin</link>.",
+	"contribute_to_translation": "Si vous trouvez un problème, n'hésitez pas à contribuer à la traduction sur <link href='https://crowdin.com/project/pocket-id'>Crowdin</link>.",
 	"personal": "Personnel",
-	"global": "Mondial",
+	"global": "Global",
 	"all_users": "Tous les utilisateurs",
 	"all_events": "Tous les événements",
 	"all_clients": "Tous les clients",
@@ -450,5 +450,7 @@
 	"display_name": "Nom d'affichage",
 	"configure_application_images": "Configurer les images d'application",
 	"ui_config_disabled_info_title": "Configuration de l'interface utilisateur désactivée",
-	"ui_config_disabled_info_description": "La configuration de l'interface utilisateur est désactivée parce que les paramètres de configuration de l'application sont gérés par des variables d'environnement. Certains paramètres peuvent ne pas être modifiables."
+	"ui_config_disabled_info_description": "La configuration de l'interface utilisateur est désactivée parce que les paramètres de configuration de l'application sont gérés par des variables d'environnement. Certains paramètres peuvent ne pas être modifiables.",
+	"logo_from_url_description": "Colle une URL d'image directe (svg, png, webp). Trouve des icônes sur <link  href=\"https://selfh.st/icons\">Selfh.st Icons</link> ou <link href=\"https://dashboardicons.com\">Dashboard Icons</link>.",
+	"invalid_url": "URL pas valide"
 }
