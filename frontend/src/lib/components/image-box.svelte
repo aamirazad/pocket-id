@@ -18,7 +18,7 @@
 	{:else}
 		<img
 			{...props}
-			class={cn('object-contain', props.class)}
+			class={cn('object-contain aspect-square', props.class)}
 			onerror={() => (error = true)}
 		/>
 	{/if}
