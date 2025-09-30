@@ -75,6 +75,7 @@
 	"use_your_passkey_instead": "Use your passkey instead?",
 	"email_login": "Email Login",
 	"enter_a_login_code_to_sign_in": "Enter a login code to sign in.",
+	"sign_in_with_login_code": "Sign in with login code",
 	"request_a_login_code_via_email": "Request a login code via email.",
 	"go_back": "Go back",
 	"an_email_has_been_sent_to_the_provided_email_if_it_exists_in_the_system": "An email has been sent to the provided email, if it exists in the system.",

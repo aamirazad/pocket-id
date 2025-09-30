@@ -6,6 +6,7 @@
 	import Input from '$lib/components/ui/input/input.svelte';
 	import { m } from '$lib/paraglide/messages';
 	import UserService from '$lib/services/user-service';
+	import appConfigStore from '$lib/stores/application-configuration-store';
 	import userStore from '$lib/stores/user-store.js';
 	import { getAxiosErrorMessage } from '$lib/utils/error-util';
 	import { preventDefault } from '$lib/utils/event-util';
@@ -63,8 +64,12 @@
 	<form onsubmit={preventDefault(authenticate)} class="w-full max-w-[450px]">
 		<Input id="Code" class="mt-7" placeholder={m.code()} bind:value={code} type="text" />
 		<div class="mt-8 flex justify-between gap-2">
-			<Button variant="secondary" class="flex-1" href={'/login/alternative' + page.url.search}
-				>{m.go_back()}</Button
+			<Button
+				variant="secondary"
+				class="flex-1"
+				href={($appConfigStore.emailOneTimeAccessAsUnauthenticatedEnabled
+					? '/login/alternative'
+					: '/login') + page.url.search}>{m.go_back()}</Button
 			>
 			<Button class="flex-1" type="submit" {isLoading}>{m.submit()}</Button>
 		</div>
