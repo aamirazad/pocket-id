@@ -24,8 +24,8 @@
 		label: m.alternative_sign_in_methods()
 	});
 
-	$effect(() => {
-		if ($appConfigStore.emailOneTimeAccessAsUnauthenticatedEnabled) {
+	appConfigStore.subscribe((config) => {
+		if (config.emailOneTimeAccessAsUnauthenticatedEnabled) {
 			alternativeSignInButton.href = '/login/alternative';
 			alternativeSignInButton.label = m.alternative_sign_in_methods();
 		} else {
