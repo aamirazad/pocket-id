@@ -474,7 +474,7 @@ func (s *OidcService) createTokenFromRefreshToken(ctx context.Context, input dto
 	var storedRefreshToken model.OidcRefreshToken
 	err = tx.
 		WithContext(ctx).
-		Preload("User").
+		Preload("User.UserGroups").
 		Where(
 			"token = ? AND expires_at > ? AND user_id = ? AND client_id = ?",
 			utils.CreateSha256Hash(rt),
