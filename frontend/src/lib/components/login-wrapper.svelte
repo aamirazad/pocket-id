@@ -33,7 +33,7 @@
 			alternativeSignInButton.label = m.sign_in_with_login_code();
 		}
 
-		if (page.url.pathname == '/login') {
+		if (page.url.pathname != '/login') {
 			alternativeSignInButton.href = `${alternativeSignInButton.href}?redirect=${encodeURIComponent(page.url.pathname + page.url.search)}`;
 		}
 	});
