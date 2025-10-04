@@ -1938,6 +1938,11 @@ func (s *OidcService) downloadAndSaveLogoFromURL(parentCtx context.Context, tx *
 	}
 
 	imagePath := common.EnvConfig.UploadPath + "/oidc-client-images/" + clientID + "." + ext
+	err = os.MkdirAll(imagePath, os.ModePerm)
+	if err != nil {
+		return err
+	}
+
 	err = utils.SaveFileStream(io.LimitReader(resp.Body, maxLogoSize+1), imagePath)
 	if err != nil {
 		return err
