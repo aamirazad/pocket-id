@@ -135,7 +135,7 @@
 	"name_passkey": "Nome da chave de acesso",
 	"name_your_passkey_to_easily_identify_it_later": "Dê um nome à sua chave de acesso para identificá-la facilmente mais tarde.",
 	"create_api_key": "Criar chave API",
-	"add_a_new_api_key_for_programmatic_access": "Adiciona uma nova chave API para acesso programático.",
+	"add_a_new_api_key_for_programmatic_access": "Adicione uma nova chave API para acesso programático à <link href='https://pocket-id.org/docs/api'>API Pocket ID</link>.",
 	"add_api_key": "Adicionar chave API",
 	"manage_api_keys": "Gerenciar chaves API",
 	"api_key_created": "Chave API criada",
@@ -453,5 +453,7 @@
 	"ui_config_disabled_info_title": "Configuração da interface do usuário desativada",
 	"ui_config_disabled_info_description": "A configuração da interface do usuário está desativada porque as configurações do aplicativo são gerenciadas por meio de variáveis de ambiente. Algumas configurações podem não ser editáveis.",
 	"logo_from_url_description": "Cole uma URL direta da imagem (svg, png, webp). Encontre ícones em <link  href=\"https://selfh.st/icons\">Selfh.st Icons</link> ou <link href=\"https://dashboardicons.com\">Dashboard Icons</link>.",
-	"invalid_url": "URL inválido"
+	"invalid_url": "URL inválido",
+	"require_user_email": "É preciso um endereço de e-mail",
+	"require_user_email_description": "Pede que os usuários tenham um endereço de e-mail. Se desativado, os usuários sem endereço de e-mail não vão poder usar os recursos que precisam disso."
 }
