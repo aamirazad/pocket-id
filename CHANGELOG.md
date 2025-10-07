@@ -1,3 +1,16 @@
+## v1.13.1
+
+### Bug Fixes
+
+- uploading a client logo with an URL fails ([#1008](https://github.com/pocket-id/pocket-id/pull/1008) by @CzBiX)
+- mark any callback url as valid if they contain a wildcard ([#1006](https://github.com/pocket-id/pocket-id/pull/1006) by @stonith404)
+
+### Other
+
+- cleanup root of repo, update workflow actions ([#1003](https://github.com/pocket-id/pocket-id/pull/1003) by @kmendell)
+
+**Full Changelog**: https://github.com/pocket-id/pocket-id/compare/v1.13.0...v1.13.1
+
 ## v1.13.0
 
 ### Bug Fixes
