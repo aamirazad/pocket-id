@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/stores'; // Add this import
 	import SignInWrapper from '$lib/components/login-wrapper.svelte';
 	import SignupForm from '$lib/components/signup/signup-form.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -33,15 +33,12 @@
 			return false;
 		}
 
-		await userStore.setUser(result.data);
+		await userStore.setUser(result. data);
 		isLoading = false;
 
-		// Get the redirect param and pass it along
-		const redirectParam = $page.url.searchParams. get('redirect');
-		const destination = redirectParam 
-			? `/signup/add-passkey?redirect=${encodeURIComponent(redirectParam)}`
-			: '/signup/add-passkey';
-		goto(destination);
+		// Check for redirect param, if exists go there, otherwise go to add-passkey
+		const redirectParam = $page.url.searchParams.get('redirect');
+		goto(redirectParam || '/signup/add-passkey');
 		return true;
 	}
 
@@ -52,7 +49,7 @@
 		}
 
 		// For token-based signups, check if we have a valid token
-		if ($appConfigStore.allowUserSignups === 'withToken' && !data.token) {
+		if ($appConfigStore.allowUserSignups === 'withToken' && !data. token) {
 			error = m.signup_requires_valid_token();
 		}
 	});
