@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores'; // Add this import
 	import SignInWrapper from '$lib/components/login-wrapper.svelte';
-	import SignupForm from '$lib/components/signup/signup-form. svelte';
+	import SignupForm from '$lib/components/signup/signup-form.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { m } from '$lib/paraglide/messages';
 	import UserService from '$lib/services/user-service';
