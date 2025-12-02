@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import SignInWrapper from '$lib/components/login-wrapper.svelte';
 	import SignupForm from '$lib/components/signup/signup-form.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -33,7 +34,12 @@
 		await userStore.setUser(result.data);
 		isLoading = false;
 
-		goto('/signup/add-passkey');
+		// Get the redirect param and pass it along
+		const redirectParam = $page.url.searchParams.get('redirect');
+		const destination = redirectParam 
+			? `/signup/add-passkey?redirect=${encodeURIComponent(redirectParam)}`
+			: '/signup/add-passkey';
+		goto(destination);
 		return true;
 	}
 </script>

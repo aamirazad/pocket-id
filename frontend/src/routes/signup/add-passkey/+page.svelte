@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { openConfirmDialog } from '$lib/components/confirm-dialog';
 	import SignInWrapper from '$lib/components/login-wrapper.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -41,7 +42,9 @@
 			return;
 		}
 
-		goto('/settings/account');
+		// Check for redirect param, otherwise go to settings
+		const redirectParam = $page.url.searchParams.get('redirect');
+		goto(redirectParam || '/settings/account');
 		isLoading = false;
 	}
 
@@ -53,7 +56,9 @@
 				label: m.skip_for_now(),
 				destructive: true,
 				action: () => {
-					goto('/settings/account');
+					// Check for redirect param, otherwise go to settings
+					const redirectParam = $page.url.searchParams.get('redirect');
+					goto(redirectParam || '/settings/account');
 				}
 			}
 		});
