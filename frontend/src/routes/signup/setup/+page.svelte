@@ -6,6 +6,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { m } from '$lib/paraglide/messages';
 	import UserService from '$lib/services/user-service';
+	import WebAuthnService from '$lib/services/webauthn-service'; // Add this import
 	import appConfigStore from '$lib/stores/application-configuration-store';
 	import userStore from '$lib/stores/user-store';
 	import type { UserSignUp } from '$lib/types/user.type';
@@ -16,6 +17,7 @@
 
 	let { data } = $props();
 	const userService = new UserService();
+	const webauthnService = new WebAuthnService(); // Add this
 
 	let isLoading = $state(false);
 	let error: string | undefined = $state();
@@ -32,11 +34,15 @@
 		}
 
 		await userStore.setUser(result.data);
-		isLoading = false;
+		
+		// Log the user out immediately after account creation
+		await webauthnService.logout();
 
-		// Check for redirect param, if exists go there, otherwise go to add-passkey
+		// Check for redirect param, if exists go there, otherwise go to /login
 		const redirectParam = $page.url.searchParams.get('redirect');
-		goto(redirectParam || '/signup/add-passkey');
+		goto(redirectParam || '/login');
+		
+		isLoading = false;
 		return true;
 	}
 </script>
@@ -60,7 +66,7 @@
 		</p>
 	{:else}
 		<p class="text-muted-foreground mt-2" in:fade>
-			{error}.
+			{error}. 
 		</p>
 	{/if}
 
