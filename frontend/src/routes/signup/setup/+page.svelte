@@ -38,9 +38,9 @@
 		// Log the user out immediately after account creation
 		await webauthnService.logout();
 
-		// Check for redirect param, if exists go there, otherwise go to /login
+		// Check for redirect param, if exists go there, otherwise go to /login/alternative/email
 		const redirectParam = $page.url.searchParams.get('redirect');
-		goto(redirectParam || '/login');
+		goto(redirectParam || '/login/alternative/email');
 		
 		isLoading = false;
 		return true;
