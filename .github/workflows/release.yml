@@ -69,7 +69,7 @@ jobs:
         run: pnpm --filter pocket-id-frontend build
 
       - name: Build binaries
-        run: sh scripts/development/build-binaries.sh
+        run: sh scripts/development/build-binaries.sh --docker-only
       - name: Build and push container image
         uses: docker/build-push-action@v6
         id: container-build-push
