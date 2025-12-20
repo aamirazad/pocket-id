@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"encoding/json"
 	"net/http"
 	"time"
 
@@ -47,24 +46,7 @@ func (wc *WebauthnController) beginRegistrationHandler(c *gin.Context) {
 	}
 
 	cookie.AddSessionIdCookie(c, int(options.Timeout.Seconds()), options.SessionID)
-
-	var responseMap map[string]interface{}
-	responseBytes, err := json.Marshal(options.Response)
-	if err != nil {
-		_ = c.Error(err)
-		return
-	}
-	err = json.Unmarshal(responseBytes, &responseMap)
-	if err != nil {
-		_ = c.Error(err)
-		return
-	}
-
-	if pk, ok := responseMap["publicKey"].(map[string]interface{}); ok {
-		pk["hints"] = []string{"client-device"}
-	}
-
-	c.JSON(http.StatusOK, responseMap)
+	c.JSON(http.StatusOK, options.Response)
 }
 
 func (wc *WebauthnController) verifyRegistrationHandler(c *gin.Context) {
@@ -98,24 +80,7 @@ func (wc *WebauthnController) beginLoginHandler(c *gin.Context) {
 	}
 
 	cookie.AddSessionIdCookie(c, int(options.Timeout.Seconds()), options.SessionID)
-
-	var responseMap map[string]interface{}
-	responseBytes, err := json.Marshal(options.Response)
-	if err != nil {
-		_ = c.Error(err)
-		return
-	}
-	err = json.Unmarshal(responseBytes, &responseMap)
-	if err != nil {
-		_ = c.Error(err)
-		return
-	}
-
-	if pk, ok := responseMap["publicKey"].(map[string]interface{}); ok {
-		pk["hints"] = []string{"client-device"}
-	}
-
-	c.JSON(http.StatusOK, responseMap)
+	c.JSON(http.StatusOK, options.Response)
 }
 
 func (wc *WebauthnController) verifyLoginHandler(c *gin.Context) {
