@@ -1,50 +1,49 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores'; // Add this import
-	import SignInWrapper from '$lib/components/login-wrapper.svelte';
-	import SignupForm from '$lib/components/signup/signup-form.svelte';
-	import { Button } from '$lib/components/ui/button';
-	import { m } from '$lib/paraglide/messages';
-	import UserService from '$lib/services/user-service';
-	import WebAuthnService from '$lib/services/webauthn-service'; // Add this import
-	import appConfigStore from '$lib/stores/application-configuration-store';
-	import userStore from '$lib/stores/user-store';
-	import type { UserSignUp } from '$lib/types/user.type';
-	import { getAxiosErrorMessage } from '$lib/utils/error-util';
-	import { tryCatch } from '$lib/utils/try-catch-util';
-	import { fade } from 'svelte/transition';
-	import LoginLogoErrorSuccessIndicator from '../../login/components/login-logo-error-success-indicator.svelte';
+import { fade } from "svelte/transition";
+import { goto } from "$app/navigation";
+import { page } from "$app/stores"; // Add this import
+import SignInWrapper from "$lib/components/login-wrapper.svelte";
+import SignupForm from "$lib/components/signup/signup-form.svelte";
+import { Button } from "$lib/components/ui/button";
+import { m } from "$lib/paraglide/messages";
+import UserService from "$lib/services/user-service";
+import WebAuthnService from "$lib/services/webauthn-service"; // Add this import
+import appConfigStore from "$lib/stores/application-configuration-store";
+import userStore from "$lib/stores/user-store";
+import type { UserSignUp } from "$lib/types/user.type";
+import { getAxiosErrorMessage } from "$lib/utils/error-util";
+import { tryCatch } from "$lib/utils/try-catch-util";
+import LoginLogoErrorSuccessIndicator from "../../login/components/login-logo-error-success-indicator.svelte";
 
-	let { data } = $props();
-	const userService = new UserService();
-	const webauthnService = new WebAuthnService(); // Add this
+const { data } = $props();
+const userService = new UserService();
+const webauthnService = new WebAuthnService(); // Add this
 
-	let isLoading = $state(false);
-	let error: string | undefined = $state();
+let isLoading = $state(false);
+let error: string | undefined = $state();
 
-	async function handleSignup(userData: UserSignUp) {
-		isLoading = true;
+async function handleSignup(userData: UserSignUp) {
+	isLoading = true;
 
-		const result = await tryCatch(userService.signupInitialUser(userData));
+	const result = await tryCatch(userService.signupInitialUser(userData));
 
-		if (result.error) {
-			error = getAxiosErrorMessage(result.error);
-			isLoading = false;
-			return false;
-		}
-
-		await userStore.setUser(result.data);
-		
-		// Log the user out immediately after account creation
-		await webauthnService.logout();
-
-		// Check for redirect param, if exists go there, otherwise go to /login/alternative/email
-		const redirectParam = $page.url.searchParams.get('redirect');
-		goto(redirectParam || '/login/alternative/email');
-		
+	if (result.error) {
+		error = getAxiosErrorMessage(result.error);
 		isLoading = false;
-		return true;
+		return false;
 	}
+
+	await userStore.setUser(result.data);
+
+	// Log the user out immediately after account creation
+	await webauthnService.logout();
+
+	// Now login the user (to verify email)
+	goto("/login/alternative/email");
+
+	isLoading = false;
+	return true;
+}
 </script>
 
 <svelte:head>
