@@ -1,38 +1,40 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import SignInWrapper from '$lib/components/login-wrapper.svelte';
-	import { Button } from '$lib/components/ui/button';
-	import { m } from '$lib/paraglide/messages';
-	import WebAuthnService from '$lib/services/webauthn-service';
-	import appConfigStore from '$lib/stores/application-configuration-store';
-	import userStore from '$lib/stores/user-store';
-	import { getWebauthnErrorMessage } from '$lib/utils/error-util';
-	import { startAuthentication } from '@simplewebauthn/browser';
-	import { fade } from 'svelte/transition';
-	import LoginLogoErrorSuccessIndicator from './components/login-logo-error-success-indicator.svelte';
+import { startAuthentication } from "@simplewebauthn/browser";
+import { fade } from "svelte/transition";
+import { goto } from "$app/navigation";
+import SignInWrapper from "$lib/components/login-wrapper.svelte";
+import { Button } from "$lib/components/ui/button";
+import { m } from "$lib/paraglide/messages";
+import WebAuthnService from "$lib/services/webauthn-service";
+import appConfigStore from "$lib/stores/application-configuration-store";
+import userStore from "$lib/stores/user-store";
+import { getWebauthnErrorMessage } from "$lib/utils/error-util";
+import LoginLogoErrorSuccessIndicator from "./components/login-logo-error-success-indicator.svelte";
 
-	let { data } = $props();
+const { data } = $props();
 
-	const webauthnService = new WebAuthnService();
+const webauthnService = new WebAuthnService();
 
-	let isLoading = $state(false);
-	let error: string | undefined = $state(undefined);
+let isLoading = $state(false);
+let error: string | undefined = $state(undefined);
 
-	async function authenticate() {
-		error = undefined;
-		isLoading = true;
-		try {
-			const loginOptions = await webauthnService.getLoginOptions();
-			const authResponse = await startAuthentication({ optionsJSON: loginOptions });
-			const user = await webauthnService.finishLogin(authResponse);
+async function authenticate() {
+	error = undefined;
+	isLoading = true;
+	try {
+		const loginOptions = await webauthnService.getLoginOptions();
+		const authResponse = await startAuthentication({
+			optionsJSON: loginOptions,
+		});
+		const user = await webauthnService.finishLogin(authResponse);
 
-			await userStore.setUser(user);
-			goto(data.redirect || '/settings');
-		} catch (e) {
-			error = getWebauthnErrorMessage(e);
-		}
-		isLoading = false;
+		await userStore.setUser(user);
+		goto(data.redirect || "/settings");
+	} catch (e) {
+		error = getWebauthnErrorMessage(e);
 	}
+	isLoading = false;
+}
 </script>
 
 <svelte:head>
@@ -52,7 +54,7 @@
 		</p>
 	{:else}
 		<p class="text-muted-foreground mt-2" in:fade>
-			{m.authenticate_with_passkey_to_access_account()}
+			Authenticate yourself with your email or passkey to access your account.
 		</p>
 	{/if}
 	<div class="mt-10 flex justify-center gap-3">
@@ -61,8 +63,13 @@
 				{m.signup()}
 			</Button>
 		{/if}
+		<Button onclick={() => {
+			goto("/login/alternative/email")
+		}}>
+			"Login with Email"
+		</Button>
 		<Button {isLoading} onclick={authenticate} autofocus={true}>
-			{error ? m.try_again() : m.authenticate()}
+			{error ? m.try_again() : "Login with Passkey"}
 		</Button>
 	</div>
 </SignInWrapper>
