@@ -60,7 +60,7 @@ async function authenticate() {
 	{/if}
 	<div class="mt-10 flex justify-center gap-3">
 		{#if $appConfigStore.allowUserSignups === 'open'}
-			<Button variant="secondary" href="/signup">
+			<Button variant="secondary" href="/signup?redirect=/login/alternative/email">
 				{m.signup()}
 			</Button>
 		{/if}

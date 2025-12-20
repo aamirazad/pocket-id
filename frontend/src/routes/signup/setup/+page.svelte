@@ -38,8 +38,9 @@ async function handleSignup(userData: UserSignUp) {
 	// Log the user out immediately after account creation
 	await webauthnService.logout();
 
-	// Now login the user (to verify email)
-	goto("/login/alternative/email");
+	// Check for redirect param, if exists go there, otherwise go to /login/alternative/email
+	const redirectParam = $page.url.searchParams.get("redirect");
+	goto(redirectParam || "/login/alternative/email");
 
 	isLoading = false;
 	return true;
