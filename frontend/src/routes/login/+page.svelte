@@ -1,4 +1,5 @@
 <script lang="ts">
+import { LucideUserLock, LucideX } from "@lucide/svelte";
 import { startAuthentication } from "@simplewebauthn/browser";
 import { fade } from "svelte/transition";
 import { goto } from "$app/navigation";
@@ -66,10 +67,14 @@ async function authenticate() {
 		<Button onclick={() => {
 			goto("/login/alternative/email")
 		}}>
-			"Login with Email"
+			Login with Email
 		</Button>
-		<Button {isLoading} onclick={authenticate} autofocus={true}>
-			{error ? m.try_again() : "Login with Passkey"}
+		<Button variant="outline" size="icon" {isLoading} onclick={authenticate} autofocus={true}>
+			{#if error}
+			<LucideX />
+			{:else}
+			<LucideUserLock />
+			{/if}
 		</Button>
 	</div>
 </SignInWrapper>
