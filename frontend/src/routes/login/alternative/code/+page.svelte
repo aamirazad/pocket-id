@@ -15,7 +15,7 @@
 	let code = $state(data.code ?? '');
 	let isLoading = $state(false);
 	let error: string | undefined = $state();
-	let backHref = $state('/login/alternative');
+	let backHref = $state('/login');
 
 	const userService = new UserService();
 
