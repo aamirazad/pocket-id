@@ -1,54 +1,54 @@
 <script lang="ts">
-	import { afterNavigate, goto } from '$app/navigation';
-	import SignInWrapper from '$lib/components/login-wrapper.svelte';
-	import { Button } from '$lib/components/ui/button';
-	import Input from '$lib/components/ui/input/input.svelte';
-	import { m } from '$lib/paraglide/messages';
-	import UserService from '$lib/services/user-service';
-	import userStore from '$lib/stores/user-store.js';
-	import { getAxiosErrorMessage } from '$lib/utils/error-util';
-	import { preventDefault } from '$lib/utils/event-util';
-	import { onMount } from 'svelte';
-	import LoginLogoErrorSuccessIndicator from '../../components/login-logo-error-success-indicator.svelte';
+import { onMount } from "svelte";
+import { afterNavigate, goto } from "$app/navigation";
+import SignInWrapper from "$lib/components/login-wrapper.svelte";
+import { Button } from "$lib/components/ui/button";
+import Input from "$lib/components/ui/input/input.svelte";
+import { m } from "$lib/paraglide/messages";
+import UserService from "$lib/services/user-service";
+import userStore from "$lib/stores/user-store.js";
+import { getAxiosErrorMessage } from "$lib/utils/error-util";
+import { preventDefault } from "$lib/utils/event-util";
+import LoginLogoErrorSuccessIndicator from "../../components/login-logo-error-success-indicator.svelte";
 
-	let { data } = $props();
-	let code = $state(data.code ?? '');
-	let isLoading = $state(false);
-	let error: string | undefined = $state();
-	let backHref = $state('/login/alternative');
+const { data } = $props();
+const code = $state(data.code ?? "");
+let isLoading = $state(false);
+let error: string | undefined = $state();
+let backHref = $state("/login");
 
-	const userService = new UserService();
+const userService = new UserService();
 
-	// If the previous page is a Pocket ID page, go back there instead of the generic alternative login page
-	afterNavigate((e) => {
-		if (e.from?.url.pathname) {
-			backHref = e.from.url.pathname + e.from.url.search;
-		}
-	});
+// If the previous page is a Pocket ID page, go back there instead of the generic alternative login page
+afterNavigate((e) => {
+	if (e.from?.url.pathname) {
+		backHref = e.from.url.pathname + e.from.url.search;
+	}
+});
 
-	async function authenticate() {
-		isLoading = true;
+async function authenticate() {
+	isLoading = true;
+	try {
+		const user = await userService.exchangeOneTimeAccessToken(code);
+		await userStore.setUser(user);
+
 		try {
-			const user = await userService.exchangeOneTimeAccessToken(code);
-			await userStore.setUser(user);
-
-			try {
-				goto(data.redirect);
-			} catch (e) {
-				error = m.invalid_redirect_url();
-			}
+			goto(data.redirect);
 		} catch (e) {
-			error = getAxiosErrorMessage(e);
+			error = m.invalid_redirect_url();
 		}
-
-		isLoading = false;
+	} catch (e) {
+		error = getAxiosErrorMessage(e);
 	}
 
-	onMount(() => {
-		if (code) {
-			authenticate();
-		}
-	});
+	isLoading = false;
+}
+
+onMount(() => {
+	if (code) {
+		authenticate();
+	}
+});
 </script>
 
 <svelte:head>
